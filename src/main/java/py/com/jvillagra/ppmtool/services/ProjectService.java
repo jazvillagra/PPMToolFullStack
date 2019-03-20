@@ -46,4 +46,8 @@ public class ProjectService {
 
         projectRepository.delete(project);
     }
+
+    public Project updateExistingProject(String projectId){
+        return saveOrUpdateProject(projectRepository.findByProjectIdentifier(projectId));
+    }
 }
