@@ -28,7 +28,11 @@ public class ProjectController {
     public ResponseEntity<?> createNewProject(@Valid @RequestBody Project project, BindingResult result){
 
         ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
-        if(errorMap != null) return errorMap;
+        if(errorMap != null) {
+            return errorMap;
+        } else{
+            System.out.println("Error");
+        }
 
         Project project1 = projectService.saveOrUpdateProject(project);
         return new ResponseEntity<Project>(project1, HttpStatus.CREATED);
@@ -41,7 +45,7 @@ public class ProjectController {
         return new ResponseEntity<Project>(project, HttpStatus.OK);
     }
 
-    @GetMapping("")
+    @GetMapping("/all")
     public Iterable<Project> getAllProjects(){
         return projectService.findAllProjects();
     }
@@ -51,11 +55,5 @@ public class ProjectController {
         projectService.deleteProjectByIdentifier(projectId);
 
         return new ResponseEntity<String>("Project with id "+projectId+" was deleted", HttpStatus.OK);
-    }
-
-    @PutMapping("")
-    public ResponseEntity<?> updateExistingProject(@PathVariable String projectId){
-        Project project = projectService.updateExistingProject(projectId);
-        return new ResponseEntity<Project>(project, HttpStatus.OK);
     }
 }

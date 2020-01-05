@@ -15,10 +15,10 @@ public class ProjectService {
 
     public Project saveOrUpdateProject(Project project){
         try{
-            project.setProjectIdentifier(project.getProjectName().toUpperCase());
+            project.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
             return projectRepository.save(project);
         }catch (Exception e){
-            throw new ProjectIdException("Project ID '"+project.getProjectIdentifier().toUpperCase());
+            throw new ProjectIdException("Project ID incorrect: "+project.getProjectIdentifier().toUpperCase());
         }
     }
 
@@ -45,9 +45,5 @@ public class ProjectService {
         }
 
         projectRepository.delete(project);
-    }
-
-    public Project updateExistingProject(String projectId){
-        return saveOrUpdateProject(projectRepository.findByProjectIdentifier(projectId));
     }
 }
